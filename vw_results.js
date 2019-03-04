@@ -24,8 +24,10 @@
       
 */
 
+// creates the reportHTML variable, which has the page's title
 var reportHTML = "<h1>" + raceTitle + "</h1>";
 
+// For each item in the array, The reportHMTL will create a table containing candidate information, which is filled in using the candidate rows function created later on.
 for (var i = 0; i < race.length; i++) {
     var totalVotes = 0;
     votes[i].forEach(calcSum);
@@ -34,8 +36,10 @@ for (var i = 0; i < race.length; i++) {
     reportHTML += "</table>";
 }
 
+// The document is edited to place the reportHTML inside of the first section element
 document.getElementsByTagName("section")[0].innerHTML = reportHTML;
 
+// The candidateRows function fills in information on each candidate from the arrays, the information then is added to the rowHTML, with the percentage for the candidate being rounded to the nearest tenth. For each candidate in the array, it will create a bar for that candidate, and then closing of the table row. The value of rowHTML is then returned
 function candidateRows(raceNum, totalVotes) {
     var rowHTML = "";
     for (var j = 0; j <= 2; j++) {
@@ -43,7 +47,7 @@ function candidateRows(raceNum, totalVotes) {
         var candidateParty = party[raceNum][j];
         var candidateVotes = votes[raceNum][j];
         var candidatePercent = calcPercent(candidateVotes, totalVotes);
-        rowHTML += "<tr> <td>" + candidateName + "(" + candidateParty + ")</td> <td>" + candidateVotes.toLocaleString() + "(" + candidatePercent.toFixed(1) + ")</td>";
+        rowHTML += "<tr> <td>" + candidateName + "(" + candidateParty + ")</td> <td>" + candidateVotes.toLocaleString() + "(" + candidatePercent.toFixed(1) + "%)</td>";
         for (var k = 0; k < candidatePercent; k++) {
             rowHTML += createBar(candidateParty, candidatePercent);
         }
@@ -52,6 +56,7 @@ function candidateRows(raceNum, totalVotes) {
     return rowHTML;
 }
 
+// The create bar function will create a barHTML variable, and then check for what the party of the candidate is, and create HTML that creates different bars depending on the party type.
 function createBar(partyType) {
     var barHTML = "";
     switch (partyType) {
